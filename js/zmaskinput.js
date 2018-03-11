@@ -1,34 +1,32 @@
 /**
  * Created by thiagozampieri on 17/10/17.
  */
-_zi = function(selector)
-{
+_zi = function (selector) {
     tag = document.querySelector(selector);
     return tag;
 }
 
-HTMLElement.prototype.zMaskInput = function(mask) {
+HTMLElement.prototype.zMaskInput = function (mask) {
 
     this.masked = mask;
     this.len1 = 0;
     this.len2 = 0;
     this.curinga = 0;
-    function is_numeric(str){
+    function is_numeric(str) {
         return /^\d+$/.test(str);
     }
 
-    this.onkeydown = function (e){
-        //console.log(e);
+    this.onkeydown = function (e) {
+        console.log('mask', e);
         if (e.key != "Backspace" & e.key != "ArrowRight" & e.key != "ArrowLeft" & e.key != "ArrowUp"
             & e.key != "ArrowDown" & e.key != "Enter" & e.key != "Tab" & e.key != "Delete") {
             if (!is_numeric(e.key)) return false;
         }
     }
 
-    this.onfocus = function()
-    {
+    this.onfocus = function () {
         console.log("entrou");
-        for (var i = this.value.length; i>=0; i--) {
+        for (var i = this.value.length; i >= 0; i--) {
             if (this.value[i]) {
                 if (!is_numeric(this.value[i])) {
 
@@ -42,11 +40,11 @@ HTMLElement.prototype.zMaskInput = function(mask) {
         this.len1 = 0;
         this.len2 = 0;
         this.curinga = 0;
-        for (var i = this.masked.length; i>=0; i--) {
+        for (var i = this.masked.length; i >= 0; i--) {
             if (this.masked[i]) {
                 if (is_numeric(this.masked[i]) === true | this.masked[i] == '?') {
                     this.len1++;
-                    if(this.masked[i] == '?') this.curinga++;
+                    if (this.masked[i] == '?') this.curinga++;
                 } else {
                     this.len2++;
                 }
@@ -54,23 +52,21 @@ HTMLElement.prototype.zMaskInput = function(mask) {
             }
         }
 
-        this.maxLength = this.masked.length-this.len2;
+        this.maxLength = this.masked.length - this.len2;
     }
 
-    this.onblur = function()
-    {
+    this.onblur = function () {
         console.log("saiu");
         if (this.value == "") return false;
 
         var text = "";
-        var i2 =0;
-        for (var i = 0; i<this.masked.length; i++) {
+        var i2 = 0;
+        for (var i = 0; i < this.masked.length; i++) {
             var char1 = this.value[i2];
             var char2 = this.masked[i];
 
-            if(char2 == '?') {
-                if ((this.value.length+this.len2) == this.masked.length)
-                {
+            if (char2 == '?') {
+                if ((this.value.length + this.len2) == this.masked.length) {
                     i--;
                     i2++;
                     text += char1;
@@ -88,7 +84,27 @@ HTMLElement.prototype.zMaskInput = function(mask) {
                 }
             }
         }
-        this.value = ((text.length+this.curinga) >= this.masked.length) ? text : "";
+        this.value = ((text.length + this.curinga) >= this.masked.length) ? text : "";
         //this.value = text;
     }
+
+    return this;
 };
+
+HTMLElement.prototype.zMaskInputPhone = function () {
+    function is_numeric(str) {
+        return /^\d+$/.test(str);
+    }
+
+    this.onkeydown = function (e) {
+        console.log('phone', e);
+
+        if (e.key === "0" && this.value.length == 0) return false;
+        if (e.key != "Backspace" & e.key != "ArrowRight" & e.key != "ArrowLeft" & e.key != "ArrowUp"
+            & e.key != "ArrowDown" & e.key != "Enter" & e.key != "Tab" & e.key != "Delete") {
+            if (!is_numeric(e.key)) return false;
+        }
+    }
+
+    return this;
+}
