@@ -37,6 +37,7 @@ HTMLElement.prototype.zMaskInput = function (mask) {
                 }
             }
         }
+
         this.len1 = 0;
         this.len2 = 0;
         this.curinga = 0;
@@ -57,6 +58,16 @@ HTMLElement.prototype.zMaskInput = function (mask) {
 
     this.onblur = function () {
         console.log("saiu");
+        var tempValue = "";
+        for (var i = this.value.length; i >= 0; i--) {
+            if (this.value[i]) {
+                if (is_numeric(this.value[i])) {
+                    tempValue = this.value[i] + "" + tempValue;
+                }
+            }
+        }
+        this.value = tempValue;
+
         if (this.value == "") return false;
 
         var text = "";
