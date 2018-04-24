@@ -17,7 +17,7 @@ HTMLElement.prototype.zMaskInput = function (mask) {
     }
 
     this.onkeydown = function (e) {
-        console.log('mask', e);
+        //console.log('mask', e);
         if (e.key != "Backspace" & e.key != "ArrowRight" & e.key != "ArrowLeft" & e.key != "ArrowUp"
             & e.key != "ArrowDown" & e.key != "Enter" & e.key != "Tab" & e.key != "Delete") {
             if (!is_numeric(e.key)) return false;
@@ -86,7 +86,12 @@ HTMLElement.prototype.zMaskInput = function (mask) {
             } else {
                 if (is_numeric(char2)) {
                     i2++;
-                    char1 = (is_numeric(char1)) ? char1 : 0;
+                    char1 = (is_numeric(char1)) ? char1 : null;
+
+                    if (char1 == null){
+                        this.value = "";
+                        return false;
+                    }
                     text += char1;
                 }
                 else {
