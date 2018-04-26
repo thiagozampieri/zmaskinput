@@ -90,7 +90,7 @@ HTMLElement.prototype.zMaskInput = function (mask) {
 
                     if (char1 == null){
                         this.value = "";
-                        return false;
+                        return this;
                     }
                     text += char1;
                 }
