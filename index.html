@@ -6,7 +6,11 @@
     <script language="javascript" src="js/zmaskinput.js"></script>
     <script language="javascript">
         window.onload = function(e){
-            _zi("input[name=cpf]").zMaskInput("000.000.000-00");
+            _zi("input[name=cpf1]").zMaskInput("000.000.000-00");
+            _zi("input[name=cpf2]").zMaskInput("000.000.000-00");
+            _zi("input[name=cpf3]").zMaskInput("000.000.000-00");
+            _zi("input[name=cpf4]").zMaskInput("000.000.000-00");
+            _zi("input[name=cpf5]").zMaskInput("000.000.000-00");
             _zi("input[name=cep]").zMaskInput("00000-000");
             _zi("input[name=date]").zMaskInput("00/00/0000");
             _zi("input[name=phone]").zMaskInput("(00) ?0000-0000").zMaskInputPhone();
@@ -14,9 +18,22 @@
     </script>
 </head>
 <body>
-    <input type="text" name="cpf" value="" placeholder="Digite um CPF"/>
+    <h2>CPF</h2>
+    <input type="text" name="cpf1" placeholder="Digite um CPF" value="05292496936"/>
+    <input type="text" name="cpf2" placeholder="Digite um CPF" value="052.924.969-36"/>
+    <input type="text" name="cpf3" placeholder="Digite um CPF" value="052924969-36"/>
+    <input type="text" name="cpf4" placeholder="Digite um CPF" value="052.924.96936"/>
+    <input type="text" name="cpf5" placeholder="Digite um CPF" value=""/>
+
+    <h2>CEP</h2>
     <input type="text" name="cep" value="" placeholder="Digite um CEP"/>
+
+
+    <h2>Data</h2>
     <input type="text" name="date" value="01/01/2010" placeholder="Digite uma data 00/00/0000"/>
+
+
+    <h2>Telefone (BR 9 digitos)</h2>
     <input type="text" name="phone" value="" placeholder="Digite um telefone (XX) 9?9999-9999"/>
 </body>
 </html>

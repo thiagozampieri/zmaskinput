@@ -1,31 +1,54 @@
 /**
  * Created by thiagozampieri on 17/10/17.
  */
+
+var ctrlDown = false,
+    ctrlKey = 17,
+    cmdKey = 91,
+    aKey = 65,
+    vKey = 86,
+    cKey = 67;
+
 _zi = function (selector) {
     tag = document.querySelector(selector);
     return tag;
 }
 
+function is_numeric(str) {
+    return /^\d+$/.test(str);
+}
+
 HTMLElement.prototype.zMaskInput = function (mask) {
+    function constructor () {
+        console.log('Constructin');
+        //super();
+    }
 
     this.masked = mask;
     this.len1 = 0;
     this.len2 = 0;
     this.curinga = 0;
-    function is_numeric(str) {
-        return /^\d+$/.test(str);
-    }
 
     this.onkeydown = function (e) {
-        //console.log('mask', e);
+        if (e.target.selectionStart != e.target.selectionEnd){
+            this.value = this.value.substring(0, e.target.selectionStart)+this.value.substring(e.target.selectionEnd, this.value.length);
+        }
+
+        if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
+        if (ctrlDown) {
+            if(e.keyCode == aKey || e.keyCode == vKey || e.keyCode == cKey) return true;
+        }
+
         if (e.key != "Backspace" & e.key != "ArrowRight" & e.key != "ArrowLeft" & e.key != "ArrowUp"
             & e.key != "ArrowDown" & e.key != "Enter" & e.key != "Tab" & e.key != "Delete") {
             if (!is_numeric(e.key)) return false;
+
+            if ((this.value.length+1) > (e.srcElement.len1)) return false;
         }
     }
 
     this.onfocus = function () {
-        console.log("entrou");
+        //console.log("entrou");
         for (var i = this.value.length; i >= 0; i--) {
             if (this.value[i]) {
                 if (!is_numeric(this.value[i])) {
@@ -53,11 +76,11 @@ HTMLElement.prototype.zMaskInput = function (mask) {
             }
         }
 
-        this.maxLength = this.masked.length - this.len2;
+        this.maxLength = (this.masked.length * 1.3) - this.len2;
     }
 
     this.onblur = function () {
-        console.log("saiu");
+        //console.log("saiu");
         var tempValue = "";
         for (var i = this.value.length; i >= 0; i--) {
             if (this.value[i]) {
@@ -104,21 +127,27 @@ HTMLElement.prototype.zMaskInput = function (mask) {
         //this.value = text;
     }
 
+    this.focus();
     return this;
 };
 
 HTMLElement.prototype.zMaskInputPhone = function () {
-    function is_numeric(str) {
-        return /^\d+$/.test(str);
-    }
-
     this.onkeydown = function (e) {
-        console.log('phone', e);
+        if (e.target.selectionStart != e.target.selectionEnd){
+            this.value = this.value.substring(0, e.target.selectionStart)+this.value.substring(e.target.selectionEnd, this.value.length);
+        }
+
+        if (e.keyCode == ctrlKey || e.keyCode == cmdKey) ctrlDown = true;
+        if (ctrlDown) {
+            if(e.keyCode == aKey || e.keyCode == vKey || e.keyCode == cKey) return true;
+        }
 
         if (e.key === "0" && this.value.length == 0) return false;
         if (e.key != "Backspace" & e.key != "ArrowRight" & e.key != "ArrowLeft" & e.key != "ArrowUp"
             & e.key != "ArrowDown" & e.key != "Enter" & e.key != "Tab" & e.key != "Delete") {
             if (!is_numeric(e.key)) return false;
+
+            if ((this.value.length+1) > (e.srcElement.len1)) return false;
         }
     }
 
