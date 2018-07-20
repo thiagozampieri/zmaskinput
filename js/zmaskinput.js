@@ -20,7 +20,6 @@ function is_numeric(str) {
 
 HTMLElement.prototype.zMaskInput = function (mask) {
     function constructor () {
-        console.log('Constructin');
         //super();
     }
 
