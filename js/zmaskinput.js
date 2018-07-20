@@ -127,7 +127,8 @@ HTMLElement.prototype.zMaskInput = function (mask) {
         //this.value = text;
     }
 
-    this.focus();
+    if (this.value.trim() != "") this.focus();
+
     return this;
 };
 
