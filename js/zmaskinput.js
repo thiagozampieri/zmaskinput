@@ -79,6 +79,7 @@ HTMLElement.prototype.zMaskInput = function (mask) {
     }
 
     this.onblur = function () {
+        this.setAttribute('data-invalid', "false");
         //console.log("saiu");
         var tempValue = "";
         for (var i = this.value.length; i >= 0; i--) {
@@ -91,7 +92,6 @@ HTMLElement.prototype.zMaskInput = function (mask) {
         this.value = tempValue;
 
         if (this.value == "") return false;
-
         var text = "";
         var i2 = 0;
         for (var i = 0; i < this.masked.length; i++) {
@@ -109,9 +109,9 @@ HTMLElement.prototype.zMaskInput = function (mask) {
                 if (is_numeric(char2)) {
                     i2++;
                     char1 = (is_numeric(char1)) ? char1 : null;
-
-                    if (char1 == null){
-                        this.value = "";
+                    if (char1 == null && this.value != ""){
+                        this.value = text;
+                        this.setAttribute('data-invalid', "true");
                         return this;
                     }
                     text += char1;
@@ -122,6 +122,7 @@ HTMLElement.prototype.zMaskInput = function (mask) {
                 }
             }
         }
+
         this.value = ((text.length + this.curinga) >= this.masked.length) ? text : "";
         //this.value = text;
     }
